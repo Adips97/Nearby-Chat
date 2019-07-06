@@ -14,9 +14,9 @@
         android:background="@color/colorPrimary" >
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/fotolawan"
-            android:layout_width="37dp"
-            android:layout_height="37dp"
-            android:src="@drawable/ic_add_a_photo_black"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:src="@drawable/userphoto"
             android:layout_marginLeft="20dp"/>
 
         <TextView
@@ -25,9 +25,9 @@
             android:layout_height="wrap_content"
             android:text="namaLawan"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold"
-            android:layout_marginLeft="15dp"/>
+            android:layout_marginLeft="10dp"/>
     </android.support.v7.widget.Toolbar>
 
     <FrameLayout

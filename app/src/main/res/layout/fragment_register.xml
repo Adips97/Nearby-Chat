@@ -38,7 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_login_username"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>
@@ -94,6 +94,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:textColor="@color/white"
+                android:background="@drawable/round"
                 android:text="@string/action_register"
                 android:textStyle="bold" />
 

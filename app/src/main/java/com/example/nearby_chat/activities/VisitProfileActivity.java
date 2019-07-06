@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.nearby_chat.R;
@@ -26,6 +28,7 @@ public class VisitProfileActivity extends AppCompatActivity {
 
     UserProfile conversationPartner;
     FirebaseStorage firebaseStorage;
+    ProgressBar imageProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,7 @@ public class VisitProfileActivity extends AppCompatActivity {
 
     private void loadProfileImage() {
         ImageView profileImage = (ImageView) findViewById(R.id.profileImage);
+        imageProgressBar = (ProgressBar) findViewById(R.id.image_spinner);
         StorageReference reference = getStorageReference();
 
         final long ONE_MEGABYTE = 1024 * 1024;
@@ -87,8 +91,7 @@ public class VisitProfileActivity extends AppCompatActivity {
             Bitmap avatar = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             conversationPartner.setAvatar(avatar);
             profileImage.setImageBitmap(avatar);
-
-
+            imageProgressBar.setVisibility(View.GONE);
         }).addOnFailureListener(exception -> {
             // Handle any errors
             Log.w(NEARBY_CHAT, "loadProfileImage: ", exception);

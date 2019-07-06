@@ -194,7 +194,6 @@ public class OnlineActivity extends AppCompatActivity
             Log.d(NEARBY_CHAT, "logout:success");
             //remove last location from geofire
             DatabaseUtils.getNewLocationDatabase().removeLocation(userId);
-
             firebaseAuth.signOut();
 
     }
@@ -204,7 +203,6 @@ public class OnlineActivity extends AppCompatActivity
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
 
     // view logic
 
