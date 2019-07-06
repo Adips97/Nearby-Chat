@@ -22,7 +22,6 @@
 
         <android.support.design.widget.CoordinatorLayout
             xmlns:app="http://schemas.android.com/apk/res-auto"
-
             android:id="@+id/main_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -35,7 +34,6 @@
                 android:paddingTop="@dimen/appbar_padding_top"
                 android:theme="@style/AppTheme.AppBarOverlay">
 
-
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar_main"
                     android:layout_width="match_parent"
@@ -46,25 +44,41 @@
                     app:popupTheme="@style/AppTheme.PopupOverlay"
                     app:title="@string/title_activity_online" />
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tabs_online"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs_online"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
 
-                    <android.support.design.widget.TabItem
-                        android:id="@+id/tab_map"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tab_map" />
+                <!--<android.support.design.widget.TabItem-->
+                    <!--android:id="@+id/tab_map"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/tab_map"-->
+                    <!--app:srcCompat="@drawable/maps"-->
+                    <!--android:layout_gravity="center|bottom" />-->
 
-                    <android.support.design.widget.TabItem
-                        android:id="@+id/tab_register"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tab_conversations" />
+                <!--<android.support.design.widget.TabItem-->
+                    <!--android:id="@+id/tab_register"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/tab_conversations" />-->
 
-                </android.support.design.widget.TabLayout>
+
+                <!--<android.support.design.widget.TabItem-->
+                    <!--android:id="@+id/tab_lapangan"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/pesan_lapangan" />-->
+
+                <!--<android.support.design.widget.TabItem-->
+                    <!--android:id="@+id/tab_user"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/akun" />-->
+
+            </android.support.design.widget.TabLayout>
+
             </android.support.design.widget.AppBarLayout>
 
             <android.support.v4.view.ViewPager

@@ -58,7 +58,7 @@ import static com.example.nearby_chat.constants.Constant.LOCATION_SERVICES;
 
 public class MapFragment extends Fragment {
     public static final double RADIUS = 1.60934;
-    private final int imageSize = 100;
+    private final int imageSize = 75;
     private final double iMiles = 1.243;
 
 
@@ -163,6 +163,8 @@ public class MapFragment extends Fragment {
                     Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, imageSize, imageSize, false);
                     if (resizedBitmap != null) {
                         marker.setIcon(BitmapDescriptorFactory.fromBitmap(resizedBitmap));
+
+
                     }
                 }
             }, null);

@@ -1,17 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.ChatActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarChat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        app:titleTextColor="@color/white"
+        android:background="@color/colorPrimary" >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/fotolawan"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:src="@drawable/ic_add_a_photo_black"
+            android:layout_marginLeft="20dp"/>
 
-    </android.support.design.widget.AppBarLayout>
+        <TextView
+            android:id="@+id/namaLawan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="namaLawan"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="15dp"/>
+    </android.support.v7.widget.Toolbar>
 
-    <include layout="@layout/content_chat" />
+    <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/toolbarChat"
+    android:layout_above="@+id/contectChat">
 
-</android.support.design.widget.CoordinatorLayout>
+    </FrameLayout>
+    <include layout="@layout/content_chat"
+        android:id="@+id/contectChat"
+        android:layout_below="@+id/toolbarChat"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
+
+</RelativeLayout>

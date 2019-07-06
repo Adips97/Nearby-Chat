@@ -21,6 +21,7 @@
     <string name="action_update">Update profile</string>
     <string name="error_invalid_username">This user name is too long</string>
     <string name="error_invalid_bio">This bio is too long</string>
+    <string name="error_invalid_anggota">This member is too long</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_different_passwords">The passwords don\'t match</string>
     <string name="error_invalid_email">This email is not valid</string>
@@ -53,6 +54,29 @@
     <string name="tab_conversations">Chat</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_maps">Map</string>
+
+
+    <string name="akun">Akun</string>
+    <string name="pesan_lapangan">Lapangan</string>
+    <string name="nama">Nama</string>
+    <string name="nama_team_futsal">Nama Team Futsal</string>
+    <string name="daftar_anggota_team">Daftar Anggota Team</string>
+    <string name="anggota_1">Anggota 1</string>
+    <string name="anggota_2">Anggota 2</string>
+    <string name="anggota_3">Anggota 3</string>
+    <string name="anggota_4">Anggota 4</string>
+    <string name="anggota_5">Anggota 5</string>
+    <string name="anggota_6">Anggota 6</string>
+    <string name="namaVisitProfile">Nama\t\t\t\t\t\t\t\t\t:</string>
+    <string name="teamVisitProfile">Nama\nTeam Futsal</string>
+    <string name="team">Team</string>
+    <string name="anggotaVisitProfile">Anggota</string>
+    <string name="anggota1">Anggota 1\t\t\t\t:</string>
+    <string name="anggota2">Anggota 2\t\t\t\t:</string>
+    <string name="anggota3">Anggota 3\t\t\t\t:</string>
+    <string name="anggota4">Anggota 4\t\t\t\t:</string>
+    <string name="anggota5">Anggota 5\t\t\t\t:</string>
+    <string name="anggota6">Anggota 6\t\t\t\t:</string>
 
 
 </resources>

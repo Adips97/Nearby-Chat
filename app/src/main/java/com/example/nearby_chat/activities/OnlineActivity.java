@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -30,6 +31,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nearby_chat.fragments.LapanganFragment;
+import com.example.nearby_chat.fragments.ProfileFragment;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -64,6 +67,8 @@ import com.example.nearby_chat.models.UserProfile;
 import com.example.nearby_chat.utils.DatabaseUtils;
 import com.example.nearby_chat.utils.NetworkUtils;
 
+import java.io.ByteArrayOutputStream;
+
 import static com.example.nearby_chat.constants.Constant.FIREBASE_STORAGE_REFERENCE;
 import static com.example.nearby_chat.constants.Constant.LOCATION_SERVICES;
 import static com.example.nearby_chat.constants.Constant.NEARBY_CHAT;
@@ -72,6 +77,8 @@ public class OnlineActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         OnlineUsersAdapter.OnAdapterInteractionListener,
         ActiveConversationsAdapter.OnAdapterInteractionListener,
+        LapanganFragment.OnFragmentInteractionListener,
+        ProfileFragment.OnFragmentInteractionListener,
         MapFragment.OnFragmentInteractionListener {
 
     public static final int INTERVAL = 60000;
@@ -116,6 +123,7 @@ public class OnlineActivity extends AppCompatActivity
     private String[] permission = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private LocationCallback mLocationCallback;
     private int REQUEST_CHECK_SETTINGS = 1;
+    Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +160,11 @@ public class OnlineActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs_online);
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.maps).setText(R.string.tab_map));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.chat).setText(R.string.tab_conversations));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.football).setText(R.string.pesan_lapangan));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.akun).setText(R.string.akun));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         onlineFragmentPagerAdapter = new OnlineFragmentPagerAdapter(getSupportFragmentManager());
 
@@ -210,6 +223,7 @@ public class OnlineActivity extends AppCompatActivity
 
         if (NetworkUtils.isAvailable(connectivityManager)) {
             loadProfileOnline();
+
         } else {
             Toast.makeText(OnlineActivity.this, "Please check your internet connection", Toast.LENGTH_LONG).show();
             initProfileView(drawerView);
@@ -299,11 +313,12 @@ public class OnlineActivity extends AppCompatActivity
 
     @Override
     public void mountChatActivity(UserProfile userProfile) {
+
         Intent intent = new Intent(this, ChatActivity.class);
         userProfile.setAvatar(null);
         intent.putExtra(ChatActivity.PARTNER_USER_PROFILE, userProfile);
-
         startActivity(intent);
+
     }
 
 
@@ -347,6 +362,9 @@ public class OnlineActivity extends AppCompatActivity
             Bitmap avatar = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             userProfile.setAvatar(avatar);
             drawerUserAvatarView.setImageBitmap(avatar);
+
+
+
         }).addOnFailureListener(exception -> {
             // Handle any errors
             Log.w(NEARBY_CHAT, "loadProfileImage: ", exception);
@@ -448,4 +466,8 @@ public class OnlineActivity extends AppCompatActivity
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);//test 4g power balance
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }

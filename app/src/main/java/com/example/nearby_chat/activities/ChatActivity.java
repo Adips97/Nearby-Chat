@@ -1,9 +1,12 @@
 package com.example.nearby_chat.activities;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.media.MediaRecorder;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -22,13 +25,17 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
@@ -49,6 +56,9 @@ import com.example.nearby_chat.utils.DatabaseUtils;
 import com.example.nearby_chat.utils.FileUtils;
 import com.example.nearby_chat.utils.ImageUtils;
 import com.example.nearby_chat.utils.PermissionUtils;
+
+import static com.example.nearby_chat.constants.Constant.FIREBASE_STORAGE_REFERENCE;
+import static com.example.nearby_chat.constants.Constant.NEARBY_CHAT;
 
 
 public class ChatActivity extends AppCompatActivity {
@@ -71,7 +81,9 @@ public class ChatActivity extends AppCompatActivity {
 
     private EditText messageEditView;
     private ImageButton messageSendButton;
+
     private final TextWatcher editMessageTextWatcher = new TextWatcher() {
+
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -92,6 +104,7 @@ public class ChatActivity extends AppCompatActivity {
 
         }
     };
+
     private String imagePath;
     private String imageUrl;
     private Uri imageUri;
@@ -100,6 +113,7 @@ public class ChatActivity extends AppCompatActivity {
     private ListView messageListView;
     private ProgressBar progressBar;
     private final ChildEventListener messageListener = new ChildEventListener() {
+
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
@@ -136,23 +150,26 @@ public class ChatActivity extends AppCompatActivity {
             Log.w(Constant.NEARBY_CHAT, "loadPost:onCancelled", databaseError.toException());
         }
     };
+
     private UserProfile conversationPartner;
     private ImageButton messageRecordButton;
     private MediaRecorder mediaRecorder;
     private boolean recording;
     private String recordPath;
     private String recordUrl;
-
+FirebaseStorage firebaseStorage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
         // spinner
+        firebaseStorage = FirebaseStorage.getInstance(FIREBASE_STORAGE_REFERENCE);
 
         progressBar = (ProgressBar) findViewById(R.id.chat_spinner);
 
         conversationPartner = (UserProfile) getIntent().getSerializableExtra(PARTNER_USER_PROFILE);
+
 
         messageEditView = (EditText) findViewById(R.id.message_edit);
         messageEditView.addTextChangedListener(editMessageTextWatcher);
@@ -163,6 +180,7 @@ public class ChatActivity extends AppCompatActivity {
 
         messageAtachImageButton = (ImageButton) findViewById(R.id.message_attach_image);
         messageAtachImageButton.setOnClickListener(v -> showImageAttachementDialog());
+
 
         recording = false;
         messageRecordButton = (ImageButton) findViewById(R.id.message_record_audio);
@@ -180,9 +198,25 @@ public class ChatActivity extends AppCompatActivity {
         messageListView.setVisibility(View.GONE);
 
         messageListView.setAdapter(chatAdapter);
+        TextView namaLawan = (TextView) findViewById(R.id.namaLawan);
+        namaLawan.setText(conversationPartner.getUserName());
 
         // set conversation title
-        setTitle(conversationPartner.getUserName());
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarChat);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        loadProfileImage();
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            Intent i = new Intent(ChatActivity.this , VisitProfileActivity.class);
+                conversationPartner.setAvatar(null);
+                i.putExtra(ChatActivity.PARTNER_USER_PROFILE, conversationPartner);
+            startActivity(i);
+                }
+            });
+
 
         // hide keyboard by default
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -237,6 +271,11 @@ public class ChatActivity extends AppCompatActivity {
         DatabaseUtils.getMessagesByConversationId(conversationId)
                 .child(id)
                 .setValue(newMessage);
+
+       // userLastMessage.setText((CharSequence) newMessage);
+
+
+
     }
 
     private void sendImage(Bitmap image) {
@@ -486,8 +525,8 @@ public class ChatActivity extends AppCompatActivity {
 
 
     private String getConversationId(String partnerId) {
-        String myId = DatabaseUtils.getCurrentUUID();
 
+        String myId = DatabaseUtils.getCurrentUUID();
         if (myId.compareTo(partnerId) < 0) {
             return myId + "-" + partnerId;
         } else {
@@ -506,5 +545,28 @@ public class ChatActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         DatabaseUtils.getMessagesByConversationId(conversationId).removeEventListener(messageListener);
+    }
+    @NonNull
+    private StorageReference getStorageReference() {
+        return firebaseStorage.getReference("profile/" + conversationPartner.getId() + ".jpeg");
+    }
+
+    private void loadProfileImage() {
+        ImageView profileImage = (ImageView) findViewById(R.id.fotolawan);
+        StorageReference reference = getStorageReference();
+
+        final long ONE_MEGABYTE = 1024 * 1024;
+        reference.getBytes(ONE_MEGABYTE).addOnSuccessListener(bytes -> {
+            // Data for "profile" is returns, use this as needed
+            Bitmap avatar = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            conversationPartner.setAvatar(avatar);
+            profileImage.setImageBitmap(avatar);
+
+
+        }).addOnFailureListener(exception -> {
+            // Handle any errors
+            Log.w(NEARBY_CHAT, "loadProfileImage: ", exception);
+        });
+
     }
 }

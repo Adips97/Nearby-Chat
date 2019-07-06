@@ -14,13 +14,25 @@ import android.widget.TextView;
 import java.util.List;
 
 import com.example.nearby_chat.R;
+import com.example.nearby_chat.constants.Database;
+import com.example.nearby_chat.models.Message;
+import com.example.nearby_chat.models.UserMessages;
 import com.example.nearby_chat.models.UserProfile;
+import com.example.nearby_chat.utils.DatabaseUtils;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ActiveConversationsAdapter extends ArrayAdapter<UserProfile> {
 
     private final int layoutResource;
     private final List<UserProfile> conversationUsers;
     private OnAdapterInteractionListener activity;
+
 
     public ActiveConversationsAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<UserProfile> conversationUsers) {
         super(context, resource, conversationUsers);
@@ -62,5 +74,9 @@ public class ActiveConversationsAdapter extends ArrayAdapter<UserProfile> {
     public interface OnAdapterInteractionListener {
 
         void mountChatActivity(UserProfile partnerUserProfile);
+
     }
+
+
 }
+

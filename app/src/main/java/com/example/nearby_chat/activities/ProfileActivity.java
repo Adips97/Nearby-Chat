@@ -49,6 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
     private final Activity activity = this;
     private AutoCompleteTextView userNameView;
     private EditText userBioView;
+    private EditText userAnggota1View,userAnggota2View,userAnggota3View,userAnggota4View,userAnggota5View,userAnggota6View;
     private Button updateProfileButton;
     private ImageView profileImage;
     private ImageView profileImageIcon;
@@ -95,6 +96,13 @@ public class ProfileActivity extends AppCompatActivity {
         userNameView = (AutoCompleteTextView) findViewById(R.id.username);
         userNameView.requestFocus();
         userBioView = (EditText) findViewById(R.id.bio);
+        userAnggota1View = (EditText) findViewById(R.id.anggota1);
+        userAnggota2View = (EditText) findViewById(R.id.anggota2);
+        userAnggota3View = (EditText) findViewById(R.id.anggota3);
+        userAnggota4View = (EditText) findViewById(R.id.anggota4);
+        userAnggota5View = (EditText) findViewById(R.id.anggota5);
+        userAnggota6View = (EditText) findViewById(R.id.anggota6);
+
 
         progressBar = (ProgressBar) findViewById(R.id.profile_spinner);
         imageProgressBar = (ProgressBar) findViewById(R.id.image_spinner);
@@ -203,6 +211,12 @@ public class ProfileActivity extends AppCompatActivity {
     private void initProfileView() {
         userNameView.setText(userProfile.getUserName());
         userBioView.setText(userProfile.getBio());
+        userAnggota1View.setText(userProfile.getAnggota1());
+        userAnggota2View.setText(userProfile.getAnggota2());
+        userAnggota3View.setText(userProfile.getAnggota3());
+        userAnggota4View.setText(userProfile.getAnggota4());
+        userAnggota5View.setText(userProfile.getAnggota5());
+        userAnggota6View.setText(userProfile.getAnggota6());
         if (userProfile.getAvatar() != null) {
             profileImage.setImageBitmap(userProfile.getAvatar());
         }
@@ -215,10 +229,23 @@ public class ProfileActivity extends AppCompatActivity {
         // Reset errors.
         userNameView.setError(null);
         userBioView.setError(null);
+        userAnggota1View.setError(null);
+        userAnggota2View.setError(null);
+        userAnggota3View.setError(null);
+        userAnggota4View.setError(null);
+        userAnggota5View.setError(null);
+        userAnggota6View.setError(null);
 
         // Store values at the time of the profile update attempt.
         String userName = userNameView.getText().toString();
         String userBio = userBioView.getText().toString();
+        String userAnggota1 = userAnggota1View.getText().toString();
+        String userAnggota2 = userAnggota2View.getText().toString();
+        String userAnggota3 = userAnggota3View.getText().toString();
+        String userAnggota4 = userAnggota4View.getText().toString();
+        String userAnggota5 = userAnggota5View.getText().toString();
+        String userAnggota6 = userAnggota6View.getText().toString();
+
 
         View errorView = null;
 
@@ -227,6 +254,58 @@ public class ProfileActivity extends AppCompatActivity {
             userBioView.setError(getString(R.string.error_invalid_bio));
             errorView = userBioView;
         }
+
+
+        // Check for a valid members
+        if (TextUtils.isEmpty(userAnggota1)) {
+            userAnggota1View.setError(getString(R.string.error_field_required));
+            errorView = userAnggota1View;
+        } else if (!DataValidator.isAnggotaValid(userAnggota1)) {
+            userAnggota1View.setError(getString(R.string.error_invalid_anggota));
+            errorView = userAnggota1View;
+        }
+
+        if (TextUtils.isEmpty(userAnggota2)) {
+            userAnggota2View.setError(getString(R.string.error_field_required));
+            errorView = userAnggota2View;
+        } else if (!DataValidator.isAnggotaValid(userAnggota2)) {
+            userAnggota2View.setError(getString(R.string.error_invalid_anggota));
+            errorView = userAnggota2View;
+        }
+
+        if (TextUtils.isEmpty(userAnggota3)) {
+            userAnggota3View.setError(getString(R.string.error_field_required));
+            errorView = userAnggota3View;
+        } else if (!DataValidator.isAnggotaValid(userAnggota3)) {
+            userAnggota3View.setError(getString(R.string.error_invalid_anggota));
+            errorView = userAnggota3View;
+        }
+
+        if (TextUtils.isEmpty(userAnggota4)) {
+            userAnggota4View.setError(getString(R.string.error_field_required));
+            errorView = userAnggota4View;
+        } else if (!DataValidator.isAnggotaValid(userAnggota4)) {
+            userAnggota4View.setError(getString(R.string.error_invalid_anggota));
+            errorView = userAnggota4View;
+        }
+
+        if (TextUtils.isEmpty(userAnggota5)) {
+            userAnggota5View.setError(getString(R.string.error_field_required));
+            errorView = userAnggota5View;
+        } else if (!DataValidator.isAnggotaValid(userAnggota5)) {
+            userAnggota5View.setError(getString(R.string.error_invalid_anggota));
+            errorView = userAnggota5View;
+        }
+
+        if (TextUtils.isEmpty(userAnggota6)) {
+            userAnggota6View.setError(getString(R.string.error_field_required));
+            errorView = userAnggota6View;
+        } else if (!DataValidator.isAnggotaValid(userAnggota6)) {
+            userAnggota6View.setError(getString(R.string.error_invalid_anggota));
+            errorView = userAnggota6View;
+        }
+
+
 
         // Check for a valid username.
         if (TextUtils.isEmpty(userName)) {
@@ -243,6 +322,12 @@ public class ProfileActivity extends AppCompatActivity {
 
             userProfile.setId(userId);
             userProfile.setUserName(userName);
+            userProfile.setAnggota1(userAnggota1);
+            userProfile.setAnggota2(userAnggota2);
+            userProfile.setAnggota3(userAnggota3);
+            userProfile.setAnggota4(userAnggota4);
+            userProfile.setAnggota5(userAnggota5);
+            userProfile.setAnggota6(userAnggota6);
             userProfile.setBio(userBio);
             //for the moment we don't store the bitmap
             profileImage.setDrawingCacheEnabled(true);

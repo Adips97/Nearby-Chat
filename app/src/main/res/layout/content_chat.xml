@@ -6,6 +6,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id = "@+id/my_awesome_toolbar"-->
+        <!--android:layout_width = "match_parent"-->
+        <!--android:layout_height = "wrap_content"-->
+        <!--android:background = "@color/colorPrimary"-->
+        <!--android:minHeight = "?attr/actionBarSize" >-->
+
+        <!--<TextView-->
+            <!--android:id = "@+id/toolbarTitle"-->
+            <!--style = "@style/TextAppearance.Widget.AppCompat.Toolbar.Title"-->
+            <!--android:background = "?attr/selectableItemBackground"-->
+            <!--android:layout_width = "wrap_content"-->
+            <!--android:gravity = "center_vertical"-->
+            <!--android:layout_height = "match_parent" />-->
+    <!--</android.support.v7.widget.Toolbar>-->
+
+
     <ProgressBar
         android:id="@+id/chat_spinner"
         android:layout_width="wrap_content"
