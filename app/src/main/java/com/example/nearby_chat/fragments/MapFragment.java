@@ -4,6 +4,7 @@ package com.example.nearby_chat.fragments;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
@@ -20,8 +21,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TabHost;
 
+import com.example.nearby_chat.activities.ProfileActivity;
+import com.example.nearby_chat.activities.UserSkil;
 import com.example.nearby_chat.adapters.OnlineFragmentPagerAdapter;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
@@ -244,7 +248,7 @@ public class MapFragment extends Fragment {
         Log.d(Constant.NEARBY_CHAT, "updateCameraPosition() called with: position = [" + position + "]");
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(position)
-                .zoom(googleMap.getMaxZoomLevel() - 6)
+                .zoom(googleMap.getMaxZoomLevel() - 7)
                 .build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         googleMap.animateCamera(cameraUpdate);
@@ -277,6 +281,12 @@ public class MapFragment extends Fragment {
             savedInstanceState) {
         super.onCreate(savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_map_view, container, false);
+        rootView.findViewById(R.id.mapView);
+        Button filterButton =(Button)rootView.findViewById(R.id.filterButton);
+        filterButton.setOnClickListener((View v) -> {
+            Intent intent = new Intent(getActivity(), UserSkil.class);
+            startActivity(intent);
+        });
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(mMap -> {

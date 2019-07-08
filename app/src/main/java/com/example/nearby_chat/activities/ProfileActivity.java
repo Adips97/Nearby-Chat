@@ -49,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
     private final Activity activity = this;
     private AutoCompleteTextView userNameView;
     private EditText userBioView;
-    private EditText userAnggota1View,userAnggota2View,userAnggota3View,userAnggota4View,userAnggota5View,userAnggota6View;
+    private EditText userAnggota1View,userAnggota2View,userAnggota3View,userAnggota4View,userAnggota5View,userAnggota6View,userrataUsiaView;
     private Button updateProfileButton;
     private ImageView profileImage;
     private ImageView profileImageIcon;
@@ -96,6 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
         userNameView = (AutoCompleteTextView) findViewById(R.id.username);
         userNameView.requestFocus();
         userBioView = (EditText) findViewById(R.id.bio);
+        userrataUsiaView = (EditText) findViewById(R.id.rataUsia);
         userAnggota1View = (EditText) findViewById(R.id.anggota1);
         userAnggota2View = (EditText) findViewById(R.id.anggota2);
         userAnggota3View = (EditText) findViewById(R.id.anggota3);
@@ -211,6 +212,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void initProfileView() {
         userNameView.setText(userProfile.getUserName());
         userBioView.setText(userProfile.getBio());
+        userrataUsiaView.setText(userProfile.getRataUsia());
         userAnggota1View.setText(userProfile.getAnggota1());
         userAnggota2View.setText(userProfile.getAnggota2());
         userAnggota3View.setText(userProfile.getAnggota3());
@@ -229,6 +231,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Reset errors.
         userNameView.setError(null);
         userBioView.setError(null);
+        userrataUsiaView.setError(null);
         userAnggota1View.setError(null);
         userAnggota2View.setError(null);
         userAnggota3View.setError(null);
@@ -239,6 +242,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Store values at the time of the profile update attempt.
         String userName = userNameView.getText().toString();
         String userBio = userBioView.getText().toString();
+        String userUsia = userrataUsiaView.getText().toString();
         String userAnggota1 = userAnggota1View.getText().toString();
         String userAnggota2 = userAnggota2View.getText().toString();
         String userAnggota3 = userAnggota3View.getText().toString();
@@ -249,12 +253,30 @@ public class ProfileActivity extends AppCompatActivity {
 
         View errorView = null;
 
+        // Check for a valid username.
+        if (TextUtils.isEmpty(userName)) {
+            userNameView.setError(getString(R.string.error_field_required));
+            errorView = userNameView;
+        } else if (!DataValidator.isUsernameValid(userName)) {
+            userNameView.setError(getString(R.string.error_invalid_username));
+            errorView = userNameView;
+        }
+
         // Check for a valid bio, if the user entered one.
         if (!TextUtils.isEmpty(userBio) && !DataValidator.isBioValid(userBio)) {
             userBioView.setError(getString(R.string.error_invalid_bio));
             errorView = userBioView;
         }
 
+
+        // Check for a valid members
+        if (TextUtils.isEmpty(userUsia)) {
+            userrataUsiaView.setError(getString(R.string.error_field_required));
+            errorView = userrataUsiaView;
+        } else if (!DataValidator.isAnggotaValid(userAnggota1)) {
+            userAnggota1View.setError(getString(R.string.error_invalid_anggota));
+            errorView = userrataUsiaView;
+        }
 
         // Check for a valid members
         if (TextUtils.isEmpty(userAnggota1)) {
@@ -307,14 +329,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        // Check for a valid username.
-        if (TextUtils.isEmpty(userName)) {
-            userNameView.setError(getString(R.string.error_field_required));
-            errorView = userNameView;
-        } else if (!DataValidator.isUsernameValid(userName)) {
-            userNameView.setError(getString(R.string.error_invalid_username));
-            errorView = userNameView;
-        }
+
 
         if (errorView != null) {
             errorView.requestFocus();
@@ -329,6 +344,7 @@ public class ProfileActivity extends AppCompatActivity {
             userProfile.setAnggota5(userAnggota5);
             userProfile.setAnggota6(userAnggota6);
             userProfile.setBio(userBio);
+            userProfile.setRataUsia(userUsia);
             //for the moment we don't store the bitmap
             profileImage.setDrawingCacheEnabled(true);
             profileImage.buildDrawingCache();

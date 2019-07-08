@@ -13,6 +13,7 @@ public class UserProfile implements Serializable {
     private String id;
     private String userName;
     private String bio;
+    private String usia;
     private String anggota1;
     private String anggota2;
     private String anggota3;
@@ -64,6 +65,14 @@ public class UserProfile implements Serializable {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getRataUsia() {
+        return usia;
+    }
+
+    public void setRataUsia(String usia) {
+        this.usia = usia;
     }
 
     public String getAnggota1() {
